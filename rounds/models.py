@@ -1,6 +1,5 @@
 from players.models import Player
 from django.db import models
-from tournaments.models import Tournament
 
 
 class MatchStatus(models.Model):
@@ -12,7 +11,10 @@ class Round(models.Model):
         MatchStatus, on_delete=models.CASCADE, null=True, related_name="rounds"
     )
     tournament = models.ForeignKey(
-        Tournament, on_delete=models.CASCADE, null=True, related_name="rounds"
+        "tournaments.Tournament",
+        on_delete=models.CASCADE,
+        null=True,
+        related_name="rounds",
     )
     order = models.IntegerField()
 

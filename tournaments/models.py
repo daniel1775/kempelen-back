@@ -1,5 +1,4 @@
 from django.db import models
-from rounds.models import MatchStatus
 from players.models import Player
 
 
@@ -13,7 +12,9 @@ class Tournament(models.Model):
     description = models.TextField()
     image = models.TextField()
     score_byes = models.FloatField(null=True)
-    status = models.ForeignKey(MatchStatus, on_delete=models.CASCADE, null=True)
+    status = models.ForeignKey(
+        "rounds.MatchStatus", on_delete=models.CASCADE, null=True
+    )
 
 
 class TiebreakTournament(models.Model):
