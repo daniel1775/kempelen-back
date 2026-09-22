@@ -5,6 +5,9 @@ from django.db import models
 class MatchStatus(models.Model):
     name = models.CharField(max_length=20)
 
+    def __str__(self):
+        return f"{self.name}"
+
 
 class Round(models.Model):
     match_status = models.ForeignKey(
@@ -18,6 +21,9 @@ class Round(models.Model):
     )
     order = models.IntegerField()
 
+    def __str__(self):
+        return f"{self.match_status} | {self.tournament} | {self.order}"
+
 
 class PlayerRound(models.Model):
     player = models.ForeignKey(
@@ -27,3 +33,6 @@ class PlayerRound(models.Model):
         Round, on_delete=models.CASCADE, null=True, related_name="player_rounds"
     )
     result = models.FloatField(null=True)
+
+    def __str__(self):
+        return f"{self.player} | {self.round} | {self.result}"

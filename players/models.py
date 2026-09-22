@@ -6,3 +6,6 @@ class Player(models.Model):
     elo = models.IntegerField(null=True)
     image = models.TextField(null=True)
     chess_profile = models.URLField(null=True)
+
+    def __str__(self):
+        return f"{self.name} | {self.elo} | {self.image} | {self.chess_profile}"
