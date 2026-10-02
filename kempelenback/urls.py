@@ -18,6 +18,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from players import views
+from players.views import list_players
+from rounds.views import list_match_status
 
-urlpatterns = [path("admin/", admin.site.urls), path("api-players", views.list_players)]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("api/players", list_players),
+    path("api/match-status", list_match_status),
+]

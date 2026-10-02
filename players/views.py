@@ -5,7 +5,7 @@ from players.models import Player
 from players.serializers import PlayerSerializer
 
 
-@api_view(["get"])
+@api_view(["GET"])
 def list_players(request):
     players = Player.objects.all()
     serializer = PlayerSerializer(players, many=True)
