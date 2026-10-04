@@ -25,7 +25,7 @@ def list_players(request: Request):
         return Response(status=status.HTTP_201_CREATED)
 
 
-@api_view(["GET", "PUT"])
+@api_view(["GET", "PUT", "PATCH"])
 def single_player(request: Request, id: int):
     if request.method == "GET":
         try:
@@ -36,10 +36,10 @@ def single_player(request: Request, id: int):
         serializer = PlayerSerializer(player)
         return Response(serializer.data)
 
-    if request.method == "PUT":
+    if request.method == "PUT" or request.method == "PATCH":
         player = get_object_or_404(Player, id=id)
 
-        serializer = PlayerSerializer(player, request.data)
+        serializer = PlayerSerializer(player, request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
