@@ -19,10 +19,9 @@ from django.urls import include
 from django.contrib import admin
 from django.urls import path
 
-from rounds.views import list_match_status
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("players.urls")),
-    path("api/match-status", list_match_status),
+    path("api/", include("rounds.urls")),
 ]
