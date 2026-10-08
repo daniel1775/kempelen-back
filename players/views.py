@@ -10,8 +10,6 @@ from players.serializers import PlayerSerializer
 
 
 class ListPlayersView(APIView):
-    allowed_methods = ["GET", "POST"]
-
     def get(self, request: Request):
         players = Player.objects.all()
         serializer = PlayerSerializer(players, many=True)
