@@ -4,12 +4,22 @@ from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.generics import get_object_or_404
 from rest_framework.views import APIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from players.models import Player
 from players.serializers import PlayerSerializer
 
+class ListPlayersView(ListCreateAPIView):
+    serializer_class = PlayerSerializer
+    queryset = Player.objects.all()
 
-class ListPlayersView(APIView):
+class DetailPlayerView(RetrieveUpdateDestroyAPIView):
+    serializer_class = PlayerSerializer
+    queryset = Player.objects.all()
+    lookup_field = "id"
+
+# Class approach
+""" class ListPlayersView(APIView):
     def get(self, request: Request):
         players = Player.objects.all()
         serializer = PlayerSerializer(players, many=True)
@@ -22,10 +32,8 @@ class ListPlayersView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(status=status.HTTP_201_CREATED)
-
-
-class DetailPlayerView(APIView):
+        return Response(status=status.HTTP_201_CREATED) """
+""" class DetailPlayerView(APIView):
     allowed_methods = ["GET", "PUT", "PATCH", "DELETE"]
 
     def get(self, request: Request, id: int):
@@ -58,11 +66,11 @@ class DetailPlayerView(APIView):
 
         player.delete()
 
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT) """
 
 
-# These are function approach, they work good but class approach has more things
-@api_view(["GET", "PUT", "PATCH", "DELETE"])
+# Function approach
+""" @api_view(["GET", "PUT", "PATCH", "DELETE"])
 def single_player(request: Request, id: int):
     # Method A: return response 404 automatically
     # player = get_object_or_404(Player, id=id)
@@ -88,10 +96,8 @@ def single_player(request: Request, id: int):
     if request.method == "DELETE":
         player.delete()
 
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-@api_view(["GET", "POST"])
+        return Response(status=status.HTTP_204_NO_CONTENT) """
+""" @api_view(["GET", "POST"])
 def list_players(request: Request):
     if request.method == "GET":
         players = Player.objects.all()
@@ -105,4 +111,4 @@ def list_players(request: Request):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED) """
