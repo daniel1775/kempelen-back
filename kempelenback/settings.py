@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "rounds",
     "players",
     "tournaments",
+    "docs"
 ]
 
 MIDDLEWARE = [
