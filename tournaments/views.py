@@ -10,7 +10,16 @@ from rounds.models import Round, MatchStatus
 
 class ListTournamentsView(APIView):
     def post(self, request: Request):
-        serializer_tournament = TournamentSerializer(data=request.data)
+        if not isinstance(request.data, dict):
+            return Response({"message": "request must be a valid JSON object"}, status=400)
+
+        tournament_request = request.data.get("tournament")
+        players_request = request.data.get("players")
+
+        if tournament_request == None or players_request == None:
+            return Response({"message": "missing tournament or player fields"}, status=400)
+
+        serializer_tournament = TournamentSerializer(data=tournament_request)
         serializer_tournament.is_valid(raise_exception=True)
         tournament = serializer_tournament.save()
         
