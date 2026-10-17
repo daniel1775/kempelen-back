@@ -13,7 +13,7 @@ class Tournament(models.Model):
     name = models.TextField()
     rounds_number = models.IntegerField()
     description = models.TextField()
-    image = models.TextField()
+    image = models.TextField(null=True)
     score_byes = models.FloatField(null=True)
     status = models.ForeignKey(
         "rounds.MatchStatus", on_delete=models.CASCADE, null=True
