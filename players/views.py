@@ -9,17 +9,17 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from players.models import Player
 from players.serializers import PlayerSerializer
 
-class ListPlayersView(ListCreateAPIView):
+""" class ListPlayersView(ListCreateAPIView):
     serializer_class = PlayerSerializer
     queryset = Player.objects.all()
 
 class DetailPlayerView(RetrieveUpdateDestroyAPIView):
     serializer_class = PlayerSerializer
     queryset = Player.objects.all()
-    lookup_field = "id"
+    lookup_field = "id" """
 
 # Class approach
-""" class ListPlayersView(APIView):
+class ListPlayersView(APIView):
     def get(self, request: Request):
         players = Player.objects.all()
         serializer = PlayerSerializer(players, many=True)
@@ -32,8 +32,9 @@ class DetailPlayerView(RetrieveUpdateDestroyAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(status=status.HTTP_201_CREATED) """
-""" class DetailPlayerView(APIView):
+        return Response(status=status.HTTP_201_CREATED)
+
+class DetailPlayerView(APIView):
     allowed_methods = ["GET", "PUT", "PATCH", "DELETE"]
 
     def get(self, request: Request, id: int):
@@ -66,7 +67,7 @@ class DetailPlayerView(RetrieveUpdateDestroyAPIView):
 
         player.delete()
 
-        return Response(status=status.HTTP_204_NO_CONTENT) """
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # Function approach

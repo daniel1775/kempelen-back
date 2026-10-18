@@ -9,4 +9,4 @@ class Player(models.Model):
     device_id = models.TextField()
 
     def __str__(self):
-        return f"{self.name} | {self.elo} | {self.image} | {self.chess_profile}"
+        return f"{self.name} | {self.elo} | {self.image} | {self.chess_profile} | {self.device_id}"

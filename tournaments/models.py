@@ -21,7 +21,7 @@ class Tournament(models.Model):
     device_id = models.TextField()
 
     def __str__(self):
-        return f"{self.name} | {self.rounds_number} | {self.description} | {self.image} | {self.score_byes} | {self.status}"
+        return f"{self.name} | {self.rounds_number} | {self.description} | {self.image} | {self.score_byes} | {self.status} | {self.device_id}"
 
 
 class TiebreakTournament(models.Model):
