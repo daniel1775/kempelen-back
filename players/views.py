@@ -21,7 +21,12 @@ class DetailPlayerView(RetrieveUpdateDestroyAPIView):
 # Class approach
 class ListPlayersView(APIView):
     def get(self, request: Request):
-        players = Player.objects.all()
+        device_id = request.query_params.get("device_id")
+
+        if not device_id:
+            return Response(data={"message": "missing device_id in query params"}, status=status.HTTP_400_BAD_REQUEST)
+
+        players = Player.objects.filter(device_id=device_id)
         serializer = PlayerSerializer(players, many=True)
 
         return Response(serializer.data)
