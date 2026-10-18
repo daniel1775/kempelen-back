@@ -24,6 +24,7 @@ class TournamentSerializer(serializers.ModelSerializer):
             "image",
             "score_byes",
             "status",
+            "device_id"
         ]
 
 
