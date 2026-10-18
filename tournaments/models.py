@@ -18,6 +18,7 @@ class Tournament(models.Model):
     status = models.ForeignKey(
         "rounds.MatchStatus", on_delete=models.CASCADE, null=True
     )
+    device_id = models.TextField()
 
     def __str__(self):
         return f"{self.name} | {self.rounds_number} | {self.description} | {self.image} | {self.score_byes} | {self.status}"
