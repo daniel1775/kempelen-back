@@ -7,7 +7,7 @@ from .serializers import TournamentSerializer, TournamentPlayerSerializer
 from .models import Tournament, TournamentPlayer
 from rounds.serializers import RoundSerializer
 from rounds.models import Round, MatchStatus
-from players.helpers import validate_players_exist
+from players.helpers import validate_players_exist, calculate_first_round
 
 
 class ListTournamentsView(APIView):
@@ -21,9 +21,9 @@ class ListTournamentsView(APIView):
         if tournament_request == None or players_request == None:
             return Response({"message": "missing tournament or player fields"}, status=400)
 
-        is_valid_players = validate_players_exist(players_request)
+        list_players = validate_players_exist(list_players=players_request)
 
-        if not is_valid_players:
+        if not list_players:
             return Response(
                 data={"message": "one or more players do not exist"}, 
                 status=status.HTTP_400_BAD_REQUEST
@@ -54,8 +54,11 @@ class ListTournamentsView(APIView):
             )
             for i in range(0, rounds_number)
         ]
-        Round.objects.bulk_create(rounds)
-        serializer_rounds = RoundSerializer(rounds, many=True)
+        rounds_DB = Round.objects.bulk_create(rounds)
+        serializer_rounds = RoundSerializer(rounds_DB, many=True)
+
+        # Parings
+        calculate_first_round(list_players, rounds_DB[0])
 
         res = {
             **serializer_tournament.data,
